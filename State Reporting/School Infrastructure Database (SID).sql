@@ -1,0 +1,73 @@
+SELECT
+	sch.school_number
+	,	sch.abbreviation
+	,	sch.name
+	,	'%param2%'
+	,	ps_customfields.getcf('schools',sch.school_number,'MI_SRSD_AdminUnit')
+	,	0
+	,	NULL
+	,	NULL
+	,	NULL
+	,	NULL
+	,	COUNT(DISTINCT CASE WHEN (LOG.LOGTYPEID = 628 AND LOG.SUBTYPE = '04') THEN log.dcid ELSE 0 END) AS Truancy
+	,	NULL
+	,	COUNT(DISTINCT CASE WHEN LOG.SUBTYPE IN ('C05','C10') THEN log.dcid ELSE 0 END) AS Physical_Assault
+	,	NULL
+	,	COUNT(DISTINCT CASE WHEN LOG.SUBTYPE IN ('B03','C09') THEN log.dcid ELSE 0 END) AS Illegal_Possession
+	,	COUNT(DISTINCT CASE WHEN LOG.SUBTYPE IN ('A09') THEN log.dcid ELSE 0 END) AS Trespassing_or_Intruders
+	,	COUNT(DISTINCT CASE WHEN LOG.SUBTYPE IN ('B06','C06') THEN log.dcid ELSE 0 END) AS Vandalism
+	,	'Cost of Property Damage'
+	,	NULL
+	,	COUNT(DISTINCT CASE WHEN LOG.SUBTYPE IN ('C11') THEN log.dcid ELSE 0 END) AS Criminal_Sexual_Conduct
+	,	'HOSTAGE'
+	,	NULL
+	,	COUNT(DISTINCT CASE WHEN LOG.SUBTYPE IN ('B02','C03','C04') THEN log.dcid ELSE 0 END) AS Wepons_on_School_Property
+	,	'HOMICIDE'
+	,	'DRIVE BY SHOOTING'
+	,	'BOMB THREAT'
+	,	'EXPLOSION'
+	,	COUNT(DISTINCT CASE WHEN LOG.SUBTYPE IN ('C08') THEN log.dcid ELSE 0 END) AS Arson
+	,	COUNT(DISTINCT CASE WHEN LOG.SUBTYPE IN ('B05') THEN log.dcid ELSE 0 END) AS Robbery_Extortion
+	,	'UNAUTHORIZED REMOVAL OF STUDENT'
+	,	'THREAT TO ATTEMPT SUICICE'
+	,	'SUICIDE'
+	,	COUNT(DISTINCT CASE WHEN LOG.SUBTYPE IN ('B04','B05') THEN log.dcid ELSE 0 END) AS Larceny_Theft
+	,	'ILLEGAL DRUG USE'
+	,	'MINOR IN POSESSION OF ALCOHOL'
+	,	NULL
+	,	NULL
+	,	'DUAL 9TH GRADE ELIGIBLE'
+	,	'DUAL 9TH GRADE PARTICIPANTS'
+	,	'DUAL 10TH GRADE ELIGIBLE'
+	,	'DUAL 10TH GRADE PARTICIPANTS'
+	,	'DUAL TUITION AND FEES'
+	,	'DUAL 11TH GRADE ELIGIBLE'
+	,	'DUAL 11TH GRADE PARTICIPANTS'
+	,	'DUAL 12TH GRADE ELIGIBLE'
+	,	'DUAL 12TH GRADE PARTICIPANTS'
+	,	'DUAL POSTSECONDARY COURSES PAID'
+	,	'DUAL POSTSECONDARY COURSES POSTSECONDARY CREDIT'
+	,	'DUAL POSTSECONDARY COURSES HIGH SCHOOL CREDIT'
+	,	'DUAL COURSES NOT COMPLETED'
+	,	NULL
+	,	'VICTIMS OF CRIMINAL OFFENSE'
+	,	NULL
+	,	NULL
+	,	NULL
+	,	NULL
+	,	NULL
+
+FROM		log
+
+INNER JOIN	schools			sch
+	ON			sch.school_number		=	log.schoolid
+
+WHERE	log.schoolid		IN	(%param3%)
+	AND	log.ENTRY_DATE		>=	'%param1%'
+	AND	log.ENTRY_DATE		<=	'%param2%'
+
+GROUP BY
+	sch.school_number
+	,	sch.abbreviation
+	,	sch.name
+	,	ps_customfields.getcf('schools',sch.school_number,'MI_SRSD_AdminUnit')

@@ -1,6 +1,6 @@
 SELECT
 	s.dcid
-	,	'<a href=/admin/students/home.html?frn=001'||to_char(s.dcid)||' target=_blank>'||'<u>Student</u>'||'</a><br /><a href=/admin/students/section25e.html?frn=001'||to_char(s.dcid)||' target=_blank>'||'<u>Sec25e</u>'||'</a>'
+	,	'<a href=/admin/students/home.html?frn=001'||to_char(s.dcid)||' target=_blank>'||'<u>Student</u>'||'</a><br /><a href=/admin/students/section25e.html?frn=001'||to_char(s.dcid)||' target=_blank>'||'<u>Sec25e</u>'||'</a><br /><a href=/admin/reportqueue/home.html?DOTHISFOR='||s.id||'&reportname=Sample+-+Student+Schedules&useeao=yes&eao='||TO_CHAR(SMSGX.firstAttendDate,'MM/DD/YYYY')||'&transactiondate=year&transactionstartdate=&transactionenddate=&watermark=&watermarkcustom=&overlay=true&printwhen=2&printdate=&printtime=&report_request_locale=en_US&ac=printformletter&btnSubmit= target=_blank><u>Schedule</u></a>'
 	,	s.last_name
 	,	s.first_name
 	,	CASE
@@ -13,7 +13,13 @@ SELECT
 	,	TO_CHAR(MIN(CASE WHEN PSER.entrydate > '10/7/2015' THEN PSER.entrydate ELSE NULL END),'MM/DD/YYYY')			-- SET DATE TO LAST SUBMISSION DATE
 	,	CASE	
 			WHEN SMSGX.firstAttendDate IS NULL THEN	'<b><a href=/admin/attendance/view/meeting.html?frn=001'||to_char(s.dcid)||' target=_blank style='||CHR(34)||'color'||CHR(58)||'red'||CHR(34)||'>'||'<u>Missing</u>'||'</a></b>'
-			ELSE	'<a href=/admin/attendance/record/week/meeting.html?frn=001'||to_char(s.dcid)||'&startdate='||TO_CHAR(SMSGX.firstAttendDate,'MM/DD/YYYY')||'&ATT_RecordMode=ATT_ModeMeeting target=_blank><u>'||TO_CHAR(SMSGX.firstAttendDate,'MM/DD/YYYY')||'</u></a>'
+			ELSE	'<a href=/admin/attendance/record/week/meeting.html?frn=001'||to_char(s.dcid)||'&startdate='||TO_CHAR(CASE TO_CHAR(SMSGX.firstAttendDate, 'Dy')
+			WHEN	'Mon' THEN SMSGX.firstAttendDate
+			WHEN	'Tue' THEN SMSGX.firstAttendDate-1
+			WHEN	'Wed' THEN SMSGX.firstAttendDate-2
+			WHEN	'Thu' THEN SMSGX.firstAttendDate-3
+			WHEN	'Fri' THEN SMSGX.firstAttendDate-4
+			END,'MM/DD/YYYY')||'&ATT_RecordMode=ATT_ModeMeeting target=_blank><u>'||TO_CHAR(SMSGX.firstAttendDate,'MM/DD/YYYY')||'</u></a>'
 			END
 	,	CASE
 			WHEN	UDES.SEC25EEXITEDLEANAME IS NULL	THEN	'<span style='||CHR(34)||'color'||CHR(58)||'red'||CHR(34)||'><b>Missing</b></span>'
@@ -76,6 +82,7 @@ WHERE	PSER.entrydate	<	PSER.exitdate
 
 GROUP BY
 	s.dcid
+	,	s.id
 	,	UDES.SEC25EINELIGIBLE
 	,	UDES.SEC25ECOMMENTS
 	,	s.last_name

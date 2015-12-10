@@ -43,12 +43,51 @@ SELECT
 	,	COUNT ( DISTINCT ( CASE WHEN (PSER.grade_level = 10 AND pam2.pres_count > 1) THEN PSER.studentid ELSE NULL END))
 	,	COUNT ( DISTINCT ( CASE WHEN (PSER.grade_level = 11 AND pam2.pres_count > 1) THEN PSER.studentid ELSE NULL END))
 	,	COUNT ( DISTINCT ( CASE WHEN (PSER.grade_level = 12 AND pam2.pres_count > 1) THEN PSER.studentid ELSE NULL END))
-	,	COUNT ( DISTINCT ( CASE WHEN (PSER.grade_level > 8 AND pam2.pres_count > 1) THEN PSER.studentid WHEN (PSER.grade_level < 9 AND pam2.pres_count > 0) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN (PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND PSER.grade_level >= 0 AND pam2.pres_count > 0) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN (SMSGX.flagSpecEd = 0 OR SMSGX.flagSpecEd IS NULL) AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND PSER.grade_level >= 0 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND PSER.grade_level >= 0 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '110' OR SMSGX.sePrgm2 = '110' OR SMSGX.sePrgm3 = '110') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND PSER.grade_level >= 0 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '120' OR SMSGX.sePrgm2 = '120' OR SMSGX.sePrgm3 = '120') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND PSER.grade_level >= 0 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '130' OR SMSGX.sePrgm2 = '130' OR SMSGX.sePrgm3 = '130') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND PSER.grade_level >= 0 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '140' OR SMSGX.sePrgm2 = '140' OR SMSGX.sePrgm3 = '140') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND PSER.grade_level >= 0 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '150' OR SMSGX.sePrgm2 = '150' OR SMSGX.sePrgm3 = '150') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND PSER.grade_level >= 0 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '160' OR SMSGX.sePrgm2 = '160' OR SMSGX.sePrgm3 = '160') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND PSER.grade_level >= 0 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '170' OR SMSGX.sePrgm2 = '170' OR SMSGX.sePrgm3 = '170') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND PSER.grade_level >= 0 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '180' OR SMSGX.sePrgm2 = '180' OR SMSGX.sePrgm3 = '180') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND PSER.grade_level >= 0 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '190' OR SMSGX.sePrgm2 = '190' OR SMSGX.sePrgm3 = '190') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND PSER.grade_level >= 0 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '191' OR SMSGX.sePrgm2 = '191' OR SMSGX.sePrgm3 = '191') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND PSER.grade_level >= 0 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '192' OR SMSGX.sePrgm2 = '192' OR SMSGX.sePrgm3 = '192') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND PSER.grade_level >= 0 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '193' OR SMSGX.sePrgm2 = '193' OR SMSGX.sePrgm3 = '193') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND PSER.grade_level >= 0 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '194' OR SMSGX.sePrgm2 = '194' OR SMSGX.sePrgm3 = '194') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND PSER.grade_level >= 0 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '270' OR SMSGX.sePrgm2 = '270' OR SMSGX.sePrgm3 = '270') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND PSER.grade_level >= 0 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '' OR SMSGX.sePrgm1 IS NULL) AND (SMSGX.sePrgm2 = '' OR SMSGX.sePrgm2 IS NULL) AND (SMSGX.sePrgm3 = '' OR SMSGX.sePrgm3 IS NULL) AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND PSER.grade_level >= 0 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN (PSER.grade_level = -1 AND pam2.pres_count > 0) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN (PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND pam2.pres_count > 0) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN (SMSGX.flagSpecEd = 0 OR SMSGX.flagSpecEd IS NULL) AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '110' OR SMSGX.sePrgm2 = '110' OR SMSGX.sePrgm3 = '110') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '120' OR SMSGX.sePrgm2 = '120' OR SMSGX.sePrgm3 = '120') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '130' OR SMSGX.sePrgm2 = '130' OR SMSGX.sePrgm3 = '130') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '140' OR SMSGX.sePrgm2 = '140' OR SMSGX.sePrgm3 = '140') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '150' OR SMSGX.sePrgm2 = '150' OR SMSGX.sePrgm3 = '150') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '160' OR SMSGX.sePrgm2 = '160' OR SMSGX.sePrgm3 = '160') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '170' OR SMSGX.sePrgm2 = '170' OR SMSGX.sePrgm3 = '170') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '180' OR SMSGX.sePrgm2 = '180' OR SMSGX.sePrgm3 = '180') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '190' OR SMSGX.sePrgm2 = '190' OR SMSGX.sePrgm3 = '190') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '191' OR SMSGX.sePrgm2 = '191' OR SMSGX.sePrgm3 = '191') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '192' OR SMSGX.sePrgm2 = '192' OR SMSGX.sePrgm3 = '192') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '193' OR SMSGX.sePrgm2 = '193' OR SMSGX.sePrgm3 = '193') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '194' OR SMSGX.sePrgm2 = '194' OR SMSGX.sePrgm3 = '194') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '270' OR SMSGX.sePrgm2 = '270' OR SMSGX.sePrgm3 = '270') AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	,	COUNT ( DISTINCT ( CASE WHEN SMSGX.flagSpecEd = 1 AND (SMSGX.sePrgm1 = '' OR SMSGX.sePrgm1 IS NULL) AND (SMSGX.sePrgm2 = '' OR SMSGX.sePrgm2 IS NULL) AND (SMSGX.sePrgm3 = '' OR SMSGX.sePrgm3 IS NULL) AND ((PSER.grade_level > 8 AND pam2.pres_count > 1) OR (PSER.grade_level < 9 AND pam2.pres_count > 0)) THEN PSER.studentid ELSE NULL END))
+	
 
 FROM		ps_enrollment_reg		PSER
 
 LEFT JOIN	students				s
 	ON			s.id						=	PSER.studentid
+LEFT JOIN	S_MI_STU_GC_X	SMSGX
+	ON			SMSGX.studentsdcid		=	s.dcid
 LEFT JOIN	schools					sch
 	ON			sch.School_Number			=	PSER.schoolid
 
@@ -128,7 +167,6 @@ LEFT JOIN (
 WHERE	PSER.entrydate		<=		'%param1%'
 	AND	PSER.exitdate		>		'%param1%'
 	AND	PSER.schoolid		NOT IN	(45541,777777,999999,6666666,666666,11111)
-	AND	PSER.grade_level	>=		0
 	AND	PSER.schoolid 		IN		(%param3%)
 
 GROUP BY

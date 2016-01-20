@@ -27,9 +27,9 @@ LEFT JOIN	ps_enrollment_reg		PSER
 		OR		(PSER.track = 'D'	AND		ca_d.D = 1)
 		OR		(PSER.track = 'E'	AND		ca_d.E = 1)
 		OR		(PSER.track = 'F'	AND		ca_d.F = 1))
-LEFT JOIN	Students				s
+INNER JOIN	Students				s
 	ON			s.id						=	PSER.studentid
-LEFT JOIN	Schools					sch
+INNER JOIN	Schools					sch
 	ON			sch.School_Number			=	ca_d.schoolid
 ~[if#cursel.%param4%=Yes]
 	INNER JOIN		~[temp.table.current.selection:students] stusel

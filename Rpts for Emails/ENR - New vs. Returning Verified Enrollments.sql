@@ -14,7 +14,7 @@ FROM
 
 	FROM		ps_enrollment_reg		PSER
 
-	LEFT JOIN	students				s
+	INNER JOIN	students				s
 		ON			s.id						=	PSER.studentid
 
 	LEFT JOIN (

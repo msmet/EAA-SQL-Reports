@@ -17,9 +17,9 @@ SELECT
 
 FROM		ps_enrollment_reg		PSER
 
-LEFT JOIN	students				s
+INNER JOIN	students				s
 	ON			s.id						=	PSER.studentid
-LEFT JOIN	schools					sch
+INNER JOIN	schools					sch
 	ON			sch.School_Number			=	PSER.schoolid
 
 LEFT JOIN (

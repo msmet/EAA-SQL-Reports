@@ -24,7 +24,7 @@ SELECT
 	,	TO_CHAR(TO_DATE(MAX	(CASE WHEN pam2.pres_count > 0 THEN  pam2.date_value ELSE  NULL END)),'MM/DD/YYYY')
 
 FROM		calendar_day			ca_d
-LEFT JOIN	ps_enrollment_reg		PSER
+INNER JOIN	ps_enrollment_reg		PSER
 	ON			PSER.schoolid			=	ca_d.schoolid
 	AND			PSER.entrydate			<=	ca_d.date_value
 	AND			PSER.exitdate			>	ca_d.date_value
@@ -35,9 +35,9 @@ LEFT JOIN	ps_enrollment_reg		PSER
 		OR		(PSER.track = 'D'	AND		ca_d.D = 1)
 		OR		(PSER.track = 'E'	AND		ca_d.E = 1)
 		OR		(PSER.track = 'F'	AND		ca_d.F = 1))
-LEFT JOIN	Students				s
+INNER JOIN	Students				s
 	ON			s.id						=	PSER.studentid
-LEFT JOIN	Schools					sch
+INNER JOIN	Schools					sch
 	ON			sch.School_Number			=	ca_d.schoolid
 LEFT JOIN	S_MI_STU_GC_X	SMSGX
 	ON			SMSGX.studentsdcid		=	s.dcid

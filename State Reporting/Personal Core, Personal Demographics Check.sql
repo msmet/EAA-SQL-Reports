@@ -40,6 +40,27 @@ SELECT
 			AND	(SMSGX.ethnicHispanic	NOT IN	(1)	OR	SMSGX.ethnicHispanic	IS NULL))	THEN	'Y'
 			ELSE												'N'	END
 	,	CASE WHEN	s.home_phone LIKE '___-___-____' THEN 'N' ELSE 'Y' END
+	,	CASE WHEN	(s.state_studentnumber	IS	NULL
+			OR	s.first_name			IS	NULL
+			OR	s.last_name				IS	NULL
+			OR	s.dob					IS	NULL
+			OR	s.dob					<	'1/1/1990'
+			OR	s.gender				IS	NULL
+			OR	s.street				IS	NULL
+			OR	s.city					IS	NULL
+			OR	s.state					IS	NULL
+			OR	s.zip					IS	NULL
+			OR	SMSGX.residentLEA		IS	NULL
+			OR	SMSGX.residentCounty		IS	NULL
+			OR	(	(SMSGX.ethnicIndian		NOT IN	(1)	OR	SMSGX.ethnicIndian	IS NULL)
+				AND	(SMSGX.ethnicAsian		NOT IN	(1)	OR	SMSGX.ethnicAsian	IS NULL)
+				AND	(SMSGX.ethnicBlack		NOT IN	(1)	OR	SMSGX.ethnicBlack	IS NULL)
+				AND	(SMSGX.ethnicPacific	NOT IN	(1) OR	SMSGX.ethnicPacific IS NULL)
+				AND	(SMSGX.ethnicWhite		NOT IN	(1) OR	SMSGX.ethnicWhite	IS NULL)
+				AND	(SMSGX.ethnicHispanic	NOT IN	(1)	OR	SMSGX.ethnicHispanic	IS NULL))
+			OR	s.home_phone			NOT LIKE '___-___-____') THEN 'Incomplete'
+		ELSE	'Complete'
+		END
 	
 FROM		ps_enrollment_reg		PSER
 INNER JOIN	students				s
@@ -51,8 +72,14 @@ INNER JOIN	schools					schb
 LEFT JOIN	S_MI_STU_GC_X	SMSGX
 	ON			SMSGX.studentsdcid		=	s.dcid
 
-WHERE	PSER.exitdate	> '9/8/2015'
-	AND	PSER.entrydate	< PSER.exitdate
+~[if.%param1%=Yes]
+	INNER JOIN ~[temp.table.current.selection:students] stusel ON stusel.dcid=s.dcid
+[/if]
+
+WHERE	PSER.entrydate	< PSER.exitdate
+	~[if.%param1%=No]
+		AND	 PSER.entrydate >= '%param2%'
+	[/if]
 	
 GROUP BY
 	s.dcid
@@ -78,22 +105,25 @@ GROUP BY
 	,	SMSGX.ethnicHispanic
 	,	s.home_phone
 
-HAVING	s.state_studentnumber	IS	NULL
-	OR	s.first_name			IS	NULL
-	OR	s.last_name				IS	NULL
-	OR	s.dob					IS	NULL
-	OR	s.dob					<	'1/1/1990'
-	OR	s.gender				IS	NULL
-	OR	s.street				IS	NULL
-	OR	s.city					IS	NULL
-	OR	s.state					IS	NULL
-	OR	s.zip					IS	NULL
-	OR	SMSGX.residentLEA		IS	NULL
-	OR	SMSGX.residentCounty		IS	NULL
-	OR	(	(SMSGX.ethnicIndian		NOT IN	(1)	OR	SMSGX.ethnicIndian	IS NULL)
-		AND	(SMSGX.ethnicAsian		NOT IN	(1)	OR	SMSGX.ethnicAsian	IS NULL)
-		AND	(SMSGX.ethnicBlack		NOT IN	(1)	OR	SMSGX.ethnicBlack	IS NULL)
-		AND	(SMSGX.ethnicPacific	NOT IN	(1) OR	SMSGX.ethnicPacific IS NULL)
-		AND	(SMSGX.ethnicWhite		NOT IN	(1) OR	SMSGX.ethnicWhite	IS NULL)
-		AND	(SMSGX.ethnicHispanic	NOT IN	(1)	OR	SMSGX.ethnicHispanic	IS NULL))
-	OR	s.home_phone			NOT LIKE '___-___-____'
+
+~[if.%param3%=Yes]
+	HAVING	s.state_studentnumber	IS	NULL
+		OR	s.first_name			IS	NULL
+		OR	s.last_name				IS	NULL
+		OR	s.dob					IS	NULL
+		OR	s.dob					<	'1/1/1990'
+		OR	s.gender				IS	NULL
+		OR	s.street				IS	NULL
+		OR	s.city					IS	NULL
+		OR	s.state					IS	NULL
+		OR	s.zip					IS	NULL
+		OR	SMSGX.residentLEA		IS	NULL
+		OR	SMSGX.residentCounty		IS	NULL
+		OR	(	(SMSGX.ethnicIndian		NOT IN	(1)	OR	SMSGX.ethnicIndian	IS NULL)
+			AND	(SMSGX.ethnicAsian		NOT IN	(1)	OR	SMSGX.ethnicAsian	IS NULL)
+			AND	(SMSGX.ethnicBlack		NOT IN	(1)	OR	SMSGX.ethnicBlack	IS NULL)
+			AND	(SMSGX.ethnicPacific	NOT IN	(1) OR	SMSGX.ethnicPacific IS NULL)
+			AND	(SMSGX.ethnicWhite		NOT IN	(1) OR	SMSGX.ethnicWhite	IS NULL)
+			AND	(SMSGX.ethnicHispanic	NOT IN	(1)	OR	SMSGX.ethnicHispanic	IS NULL))
+		OR	s.home_phone			NOT LIKE '___-___-____'
+[/if]

@@ -167,9 +167,9 @@ FROM	(			/***	Initial Query for Distinct Relevant Student LIST For Each Active D
 		,	sls.grade_level
 ) student_list
 
-LEFT JOIN	Students				s
+INNER JOIN	Students				s
 	ON			s.id						=	student_list.studentid
-LEFT JOIN	Schools					sch
+INNER JOIN	Schools					sch
 	ON			sch.School_Number			=	student_list.schoolid
 LEFT JOIN	PS_AdaAdm_Meeting_Ptod 	psap
 	ON			psap.StudentID				=	student_list.studentid
